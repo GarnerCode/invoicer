@@ -17,13 +17,31 @@
       </div>
       <input class="field-input" type="text" name="test">
     </div>
+    <Dropdown label="Payment Terms" :options="testOptions"></Dropdown>
+    <DateSelector label="Issue Date"></DateSelector>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Dropdown from '@/components/Dropdown.vue';
+import DateSelector from '@/components/DateSelector.vue';
 
 export default defineComponent({
   name: 'HomeView',
+  components: {
+    Dropdown,
+    DateSelector,
+  },
+  data: () => {
+    return {
+      testOptions: [
+        'Net 1 Day',
+        'Net 7 Days',
+        'Net 14 Days',
+        'Net 30 Days',
+      ],
+    }
+  }
 });
 </script>

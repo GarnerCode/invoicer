@@ -38,6 +38,10 @@
     --color-field-border: #DFE3FA;
     --color-field-border-active: #7C5DFA;
 
+    --color-dropdown-popup: #FFFFFF;
+    --dropdown-popup-box-shadow: 0 10px 20px rgba(72, 84, 159, 0.25);
+    --dropdown-popup-options-border: 1px solid #DFE3FA;
+
     --color-background: #F8F8FB;
 
     --font-family-primary: 'League Spartan', sans-serif;
@@ -57,6 +61,10 @@
     --color-field-text: #FFFFFF;
     --color-field-border: #252945;
     --color-field-border-active: #252945;
+
+    --color-dropdown-popup: #252945;
+    --dropdown-popup-box-shadow: 0 0 0 rgba(0,0,0,0);
+    --dropdown-popup-options-border: 1px solid #1E2139;
 
 
     --color-gamma: #1E2139;
@@ -176,7 +184,11 @@
         font-weight: 500;
       }
       .field-input {
-        padding: 16.5px;
+        // padding: 16.5px;
+        display: flex;
+        flex-direction: column;
+        padding: 0 16.5px;
+        height: 48px;
         font-size: 15px;
         font-weight: bold;
         border-radius: 4px;
@@ -184,6 +196,7 @@
         border: 1px solid var(--color-field-border);
         background-color: var(--color-field-background);
         color: var(--color-field-text);
+        caret-color: var(--color-primary);
         &:focus {
           outline: none;
           border: 1px solid var(--color-field-border-active);
