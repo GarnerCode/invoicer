@@ -1,7 +1,7 @@
 <template>
   <div id="app-container">
     <Navbar :userTheme="userTheme"></Navbar>
-    <div class="dashboard">
+    <div id="view-container">
       <router-view/>
     </div>
   </div>
@@ -12,6 +12,7 @@
   :root {
     --color-primary: #7C5DFA;
     --color-primary-alt: #9277FF;
+    --color-text: #0C0E16;
 
     --color-navbar: #373B53;
     
@@ -28,16 +29,21 @@
   }
   :root.dark-theme {
     --color-background: #141625;
+    --color-text: #FFFFFF;
     --color-navbar: #1E2139;
     --color-gamma: #1E2139;
   }
   #app-container {
     background-color: var(--color-background);
   }
+  html {
+    overflow: hidden;
+  }
   body {
     margin: 0;
     font-family: 'League Spartan', sans-serif;
     font-weight: 500;
+    color: var(--color-text);
   }
   h1, h2, h3, h4, p {
     margin: 0;
@@ -74,17 +80,36 @@
         letter-spacing: -0.25px;
       }
     }
+    #view-container {
+      padding: 3rem 2rem;
+      height: calc(100vh - 6rem - 72px);
+      overflow-y: auto;
+    }
   }
   @media screen and (min-width: 768px) {
     h1 {
       font-size: 36px;
       line-height: 33px;
     }
+    #view-container {
+      height: calc(100vh - 6rem - 80px);
+    }
   }
   @media screen and (min-width: 1440px) {
     #app-container {
       display: flex;
       flex-direction: row;
+    }
+    #view-container {
+      height: calc(100vh - 6rem);
+      width: 100vw;
+      padding: 4rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .view {
+        width: 730px;
+      }
     }
   }
 </style>

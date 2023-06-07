@@ -143,11 +143,28 @@
             }
             .theme-toggle-container {
                 height: 72px;
+                svg {
+                    path {
+                        transition: fill 0.25s ease;
+                    }
+                    &:hover {
+                        path {
+                            fill: #fcb900;
+                        }
+                    }
+                }
             }
             .user-container {
                 border: none;
                 border-top: 1px solid #494E6E;
                 width: 103px;
+                img {
+                    transition: border-width 0.1s ease;
+                    border: 0px solid var(--color-primary);
+                    &:hover {
+                        border: 5px solid var(--color-primary);
+                    }
+                }
             }
         }
     }
