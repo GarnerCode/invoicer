@@ -143,7 +143,7 @@
             }
             .theme-toggle-container {
                 height: 72px;
-                svg {
+                .theme-toggle {
                     path {
                         transition: fill 0.25s ease;
                     }
