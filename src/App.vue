@@ -10,6 +10,7 @@
 <style lang="scss">
   @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;700&display=swap');
   :root {
+    --color-background: #F8F8FB;
     --color-primary: #7C5DFA;
     --color-primary-alt: #9277FF;
     --color-text: #0C0E16;
@@ -42,9 +43,10 @@
     --dropdown-popup-box-shadow: 0 10px 20px rgba(72, 84, 159, 0.25);
     --dropdown-popup-options-border: 1px solid #DFE3FA;
 
-    --color-background: #F8F8FB;
-
     --font-family-primary: 'League Spartan', sans-serif;
+
+    --color-alpha: #0C0E16;
+    --color-beta: #888EB0;
   }
   :root.dark-theme {
     --color-background: #141625;
@@ -66,8 +68,8 @@
     --dropdown-popup-box-shadow: 0 0 0 rgba(0,0,0,0);
     --dropdown-popup-options-border: 1px solid #1E2139;
 
-
-    --color-gamma: #1E2139;
+    --color-alpha: #FFFFFF;
+    --color-beta: #DFE3FA;
   }
   #app-container {
     background-color: var(--color-background);
@@ -86,6 +88,10 @@
   }
   h1, h2, h3, h4 {
     font-weight: 700;
+  }
+  .flex-row {
+    display: flex;
+    flex-direction: row;
   }
   @media screen and (min-width: 0px) {
     h1 {
@@ -111,6 +117,7 @@
       font-size: 13px;
       line-height: 18px;
       letter-spacing: -0.1px;
+      color: var(--color-beta);
       &.var {
         line-height: 15px;
         letter-spacing: -0.25px;
@@ -120,6 +127,12 @@
       padding: 3rem 2rem;
       height: calc(100vh - 6rem - 72px);
       overflow-y: auto;
+      .view-header {
+        display: flex;
+        flex-direction: row;
+        // align-items: center;
+        justify-content: space-between;
+      }
     }
     .button {
       border: none;
@@ -140,6 +153,22 @@
       &.icon-text {
         display: flex;
         flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        height: 44px;
+        padding: 0;
+        padding-left: 5px;
+        padding-right: 16.5px;
+        .button-icon {
+          background-color: #FFFFFF;
+          width: 32px;
+          height: 32px;
+          border-radius: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
       }
       // Button 3
       &.button-theme-primary {
