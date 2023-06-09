@@ -145,7 +145,7 @@
                 height: 72px;
                 .theme-toggle {
                     path {
-                        transition: fill 0.25s ease;
+                        transition: var(--transition);
                     }
                     &:hover {
                         path {

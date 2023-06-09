@@ -25,7 +25,7 @@
         transform: translateY(-12px);
     }
     .slide-enter-active, .slide-leave-active {
-        transition: all 0.25s ease;
+        transition: var(--transition);
     }
     .dropdown-field {
         position: relative;
@@ -35,9 +35,9 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            transition: border 0.25s ease;
+            transition: var(--transition);
             svg {
-                transition: transform 0.25s ease;
+                transition: var(--transition);
                 &.active {
                     transform: rotate(180deg);
                 }
@@ -56,7 +56,7 @@
             .option {
                 padding: 16.5px;
                 cursor: pointer;
-                transition: color 0.25s ease;
+                transition: var(--transition);
                 &:hover {
                     color: var(--color-primary-alt);
                 }

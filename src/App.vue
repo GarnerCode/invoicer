@@ -1,7 +1,8 @@
 <template>
   <div id="app-container">
+    <Loading v-if="globalStore.getLoading && !globalStore.getInvoiceList.length"></Loading>
     <Navbar :userTheme="userTheme"></Navbar>
-    <div id="view-container">
+    <div v-if="!globalStore.getLoading && globalStore.getInvoiceList.length" id="view-container">
       <router-view/>
     </div>
   </div>
@@ -45,8 +46,18 @@
 
     --font-family-primary: 'League Spartan', sans-serif;
 
+    --color-background-paid: #FFFFFF;
+    --color-text-paid: #33D69F;
+    --color-background-pending: #FFFFFF;
+    --color-text-pending: #FF8F00;
+    --color-background-draft: #FFFFFF;
+    --color-text-draft: #373B53;
+
     --color-alpha: #0C0E16;
     --color-beta: #888EB0;
+    --color-gamma: #7E88C3;
+
+    --transition: all 0.25s ease;
   }
   :root.dark-theme {
     --color-background: #141625;
@@ -67,6 +78,11 @@
     --color-dropdown-popup: #252945;
     --dropdown-popup-box-shadow: 0 0 0 rgba(0,0,0,0);
     --dropdown-popup-options-border: 1px solid #1E2139;
+
+    --color-background-paid: rgba(51, 214, 159, 0.05);
+    --color-background-pending: rgba(255, 143, 0, 0.05);
+    --color-background-draft: rgba(223, 227, 250, 0.05);
+    --color-text-draft: #DFE3FA;
 
     --color-alpha: #FFFFFF;
     --color-beta: #DFE3FA;
@@ -140,7 +156,7 @@
       font-size: 15px;
       font-weight: bold;
       padding: 16.5px 27.5px;
-      transition: all 0.25s ease;
+      transition: var(--transition);
       cursor: pointer;
       // Button 1 & Button 2
       &.button-primary {
@@ -221,7 +237,7 @@
         font-size: 15px;
         font-weight: bold;
         border-radius: 4px;
-        transition: all 0.25s ease;
+        transition: var(--transition);
         border: 1px solid var(--color-field-border);
         background-color: var(--color-field-background);
         color: var(--color-field-text);
@@ -232,6 +248,12 @@
         }
       }
     }
+    .inline-hide-mobile {
+      display: none;
+    }
+    .block-hide-mobile {
+      display: none;
+    }
   }
   @media screen and (min-width: 768px) {
     h1 {
@@ -240,6 +262,12 @@
     }
     #view-container {
       height: calc(100vh - 6rem - 80px);
+    }
+    .inline-hide-mobile {
+      display: inline;
+    }
+    .block-hide-mobile {
+      display: block;
     }
   }
   @media screen and (min-width: 1440px) {
@@ -263,17 +291,24 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue';
+  import { useGlobalStore } from './store/globalStore';
+  import Loading from './components/Loading.vue';
   import Navbar from './components/Navbar.vue';
 
   export default defineComponent({
     name: 'App',
     components: {
+      Loading,
       Navbar,
     },
     data: () => {
       return {
         userTheme: "light-theme",
+        globalStore: useGlobalStore(),
       }
+    },
+    created() {
+      this.globalStore.fetchInvoices();
     },
     mounted() {
       document.addEventListener('themeEvent', () => {
