@@ -7,6 +7,7 @@ export const useGlobalStore = defineStore('globalStore', {
         return {
             invoicesLoading: true,
             invoiceList: [] as Array<Invoice>,
+            filteredInvoiceList: [] as Array<Invoice>,
         }
     },
     getters: {
@@ -24,11 +25,15 @@ export const useGlobalStore = defineStore('globalStore', {
             .select();
             if (data) {
                 this.setInvoiceList(data);
+                this.setFilteredInvoiceList(data);
                 this.invoicesLoading = false;
             }
         },
         setInvoiceList(payload: Array<Invoice>): void {
             this.invoiceList = payload;
+        },
+        setFilteredInvoiceList(payload: Array<Invoice>): void {
+            this.filteredInvoiceList = payload;
         },
         getInvoiceById(id: string): Invoice {
             return this.getInvoiceList.find((invoice: Invoice) => {
