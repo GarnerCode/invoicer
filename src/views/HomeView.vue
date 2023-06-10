@@ -18,7 +18,7 @@
         </button>
       </div>
     </div>
-    <div class="view-content">
+    <div class="view-content home-view-content">
       <div v-if="!globalStore.getInvoiceList.length" class="no-content">
         <img src="@/assets/illustration-empty.svg" alt="No invoices illustration">
         <h2>There is nothing here</h2>
@@ -46,7 +46,7 @@
       gap: 1.5rem;
     }
   }
-  .view-content {
+  .home-view-content {
     display: flex;
     flex-direction: column;
     justify-content: center;

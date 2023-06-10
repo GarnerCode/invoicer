@@ -1,5 +1,5 @@
 <template>
-    <div class="invoice invoice-summary-mobile">
+    <div @click="viewInvoice(invoice.id)" class="invoice invoice-summary-mobile">
         <div class="row">
             <h4><span class="highlight">#</span>{{ invoice.id }}</h4>
             <p>{{ invoice.clientName }}</p>
@@ -16,7 +16,7 @@
         </div>
         <svg class="block-hide-mobile" width="7" height="10" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4-4 4" stroke="#7C5DFA" stroke-width="2" fill="none" fill-rule="evenodd"/></svg>
     </div>
-    <div class="invoice invoice-summary">
+    <div @click="viewInvoice(invoice.id)" class="invoice invoice-summary">
         <h4><span class="highlight">#</span>{{ invoice.id }}</h4>
         <p>Due {{ invoice.paymentDue }}</p>
         <p>{{ invoice.clientName }}</p>
@@ -32,6 +32,45 @@
 </template>
 
 <style lang="scss">
+    .status {
+        width: 104px;
+        height: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        border-radius: 6px;
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 100%;
+        }
+        .status-label {
+            text-transform: capitalize;
+        }
+        &.paid {
+            background-color: var(--color-background-paid);
+            color: var(--color-text-paid);
+            .indicator {
+                background-color: var(--color-text-paid);
+            }
+        }
+        &.pending {
+            background-color: var(--color-background-pending);
+            color: var(--color-text-pending);
+            .indicator {
+                background-color: var(--color-text-pending);
+            }
+        }
+        &.draft {
+            background-color: var(--color-background-draft);
+            color: var(--color-text-draft);
+            .indicator {
+                background-color: var(--color-text-draft);
+            }
+        }
+    }
     @media screen and (min-width: 0px) {
         .invoice {
             background-color: var(--color-field-background);
@@ -55,51 +94,9 @@
                 align-items: center;
                 justify-content: space-between;
             }
-            .highlight {
-                color: var(--color-gamma);
-            }
         }
         .invoice-summary {
             display: none;
-        }
-        .status {
-            width: 104px;
-            height: 40px;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            border-radius: 6px;
-            .indicator {
-                width: 8px;
-                height: 8px;
-                border-radius: 100%;
-            }
-            .status-label {
-                text-transform: capitalize;
-            }
-            &.paid {
-                background-color: var(--color-background-paid);
-                color: var(--color-text-paid);
-                .indicator {
-                    background-color: var(--color-text-paid);
-                }
-            }
-            &.pending {
-                background-color: var(--color-background-pending);
-                color: var(--color-text-pending);
-                .indicator {
-                    background-color: var(--color-text-pending);
-                }
-            }
-            &.draft {
-                background-color: var(--color-background-draft);
-                color: var(--color-text-draft);
-                .indicator {
-                    background-color: var(--color-text-draft);
-                }
-            }
         }
     }
     @media screen and (min-width: 768px) {
@@ -132,6 +129,11 @@
         props: {
             invoice: {
                 type: Object,
+            }
+        },
+        methods: {
+            viewInvoice(id: string): void {
+            this.$router.push(`/invoice/${id}`);
             }
         }
     })

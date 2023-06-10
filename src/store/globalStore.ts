@@ -15,7 +15,7 @@ export const useGlobalStore = defineStore('globalStore', {
         },
         getInvoiceList: (state): Array<Invoice> => {
             return state.invoiceList;
-        }
+        },
     },
     actions: {
         async fetchInvoices(): Promise<void> {
@@ -29,6 +29,11 @@ export const useGlobalStore = defineStore('globalStore', {
         },
         setInvoiceList(payload: Array<Invoice>): void {
             this.invoiceList = payload;
+        },
+        getInvoiceById(id: string): Invoice {
+            return this.getInvoiceList.find((invoice: Invoice) => {
+                return invoice.id === id;
+            });
         }
     },
 })

@@ -254,6 +254,12 @@
     .block-hide-mobile {
       display: none;
     }
+    .view-content {
+      margin-top: 2rem;
+    }
+    .highlight {
+      color: var(--color-gamma);
+    }
   }
   @media screen and (min-width: 768px) {
     h1 {
