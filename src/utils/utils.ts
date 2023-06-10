@@ -24,3 +24,13 @@ export const getUniqueId = (): string => {
     }
     return id;
 }
+
+export const formatCurrency = (num: number): string => {
+    const parsed = num.toString()
+    return parseFloat(parseFloat(parsed).toFixed(2)).toLocaleString(
+        "en-IN",
+        {
+          useGrouping: true,
+        }
+      );
+}

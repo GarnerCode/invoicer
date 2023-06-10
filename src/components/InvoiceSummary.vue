@@ -20,7 +20,7 @@
         <h4><span class="highlight">#</span>{{ invoice.id }}</h4>
         <p>Due {{ invoice.paymentDue }}</p>
         <p>{{ invoice.clientName }}</p>
-        <h3>${{ invoice.total.toLocaleString() }}</h3>
+        <h3>${{ invoice.total.toFixed(2).toLocaleString() }}</h3>
         <div class="status" :class="`${invoice.status}`">
             <div class="indicator"></div>
             <h4 class="status-label">{{ invoice.status }}</h4>
@@ -97,6 +97,22 @@
         }
         .invoice-summary {
             display: none;
+        }
+        .client-address {
+            margin-top: 8px;
+        }
+        .billing-details {
+            display: flex;
+            flex-direction: row;
+            gap: 4rem;
+            .column {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                &.payment-details {
+                    justify-content: space-between;
+                }
+            }
         }
     }
     @media screen and (min-width: 768px) {

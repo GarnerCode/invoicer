@@ -53,6 +53,9 @@
     --color-background-draft: #FFFFFF;
     --color-text-draft: #373B53;
 
+    --color-invoice-items-container: #F9FAFE;
+    --color-item-quantity: #888EB0;
+
     --color-alpha: #0C0E16;
     --color-beta: #888EB0;
     --color-gamma: #7E88C3;
@@ -83,6 +86,8 @@
     --color-background-pending: rgba(255, 143, 0, 0.05);
     --color-background-draft: rgba(223, 227, 250, 0.05);
     --color-text-draft: #DFE3FA;
+
+    --color-invoice-items-container: #252945;
 
     --color-alpha: #FFFFFF;
     --color-beta: #DFE3FA;
@@ -254,6 +259,12 @@
     .block-hide-mobile {
       display: none;
     }
+    .block-hide-tablet {
+      display: block;
+    }
+    .flex-hide-mobile {
+      display: none !important;
+    }
     .view-content {
       margin-top: 2rem;
     }
@@ -274,6 +285,12 @@
     }
     .block-hide-mobile {
       display: block;
+    }
+    .block-hide-tablet {
+      display: none;
+    }
+    .flex-hide-mobile {
+      display: flex !important;
     }
   }
   @media screen and (min-width: 1440px) {
