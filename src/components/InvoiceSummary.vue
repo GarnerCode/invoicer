@@ -1,5 +1,5 @@
 <template>
-    <div class="invoice-summary">
+    <div class="invoice invoice-summary-mobile">
         <div class="row">
             <h4><span class="highlight">#</span>{{ invoice.id }}</h4>
             <p>{{ invoice.clientName }}</p>
@@ -16,11 +16,24 @@
         </div>
         <svg class="block-hide-mobile" width="7" height="10" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4-4 4" stroke="#7C5DFA" stroke-width="2" fill="none" fill-rule="evenodd"/></svg>
     </div>
+    <div class="invoice invoice-summary">
+        <h4><span class="highlight">#</span>{{ invoice.id }}</h4>
+        <p>Due {{ invoice.paymentDue }}</p>
+        <p>{{ invoice.clientName }}</p>
+        <h3>${{ invoice.total.toLocaleString() }}</h3>
+        <div class="status" :class="`${invoice.status}`">
+            <div class="indicator"></div>
+            <h4 class="status-label">{{ invoice.status }}</h4>
+        </div>
+        <div class="arrow">
+            <svg class="block-hide-mobile" width="7" height="10" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l4 4-4 4" stroke="#7C5DFA" stroke-width="2" fill="none" fill-rule="evenodd"/></svg>
+        </div>
+    </div>
 </template>
 
 <style lang="scss">
     @media screen and (min-width: 0px) {
-        .invoice-summary {
+        .invoice {
             background-color: var(--color-field-background);
             padding: 16px;
             border-radius: 8px;
@@ -28,12 +41,14 @@
             cursor: pointer;
             transition: var(--transition);
             border: 1px solid var(--color-field-background);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
             &:hover {
                 border: 1px solid var(--color-primary);
             }
+        }
+        .invoice-summary-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
             .row {
                 display: flex;
                 flex-direction: row;
@@ -43,59 +58,60 @@
             .highlight {
                 color: var(--color-gamma);
             }
-            .status {
-                width: 104px;
-                height: 40px;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                gap: 8px;
-                border-radius: 6px;
+        }
+        .invoice-summary {
+            display: none;
+        }
+        .status {
+            width: 104px;
+            height: 40px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border-radius: 6px;
+            .indicator {
+                width: 8px;
+                height: 8px;
+                border-radius: 100%;
+            }
+            .status-label {
+                text-transform: capitalize;
+            }
+            &.paid {
+                background-color: var(--color-background-paid);
+                color: var(--color-text-paid);
                 .indicator {
-                    width: 8px;
-                    height: 8px;
-                    border-radius: 100%;
+                    background-color: var(--color-text-paid);
                 }
-                .status-label {
-                    text-transform: capitalize;
+            }
+            &.pending {
+                background-color: var(--color-background-pending);
+                color: var(--color-text-pending);
+                .indicator {
+                    background-color: var(--color-text-pending);
                 }
-                &.paid {
-                    background-color: var(--color-background-paid);
-                    color: var(--color-text-paid);
-                    .indicator {
-                        background-color: var(--color-text-paid);
-                    }
-                }
-                &.pending {
-                    background-color: var(--color-background-pending);
-                    color: var(--color-text-pending);
-                    .indicator {
-                        background-color: var(--color-text-pending);
-                    }
-                }
-                &.draft {
-                    background-color: var(--color-background-draft);
-                    color: var(--color-text-draft);
-                    .indicator {
-                        background-color: var(--color-text-draft);
-                    }
+            }
+            &.draft {
+                background-color: var(--color-background-draft);
+                color: var(--color-text-draft);
+                .indicator {
+                    background-color: var(--color-text-draft);
                 }
             }
         }
     }
     @media screen and (min-width: 768px) {
+        .invoice-summary-mobile {
+            display: none;
+        }
         .invoice-summary {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            gap: 0;
-            .row, .column {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr) 7px;
+            h3, h4, p, .arrow {
                 display: flex;
                 flex-direction: row;
-                justify-content: space-between;
-                gap: 4rem;
                 align-items: center;
             }
         }
