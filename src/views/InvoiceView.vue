@@ -8,10 +8,17 @@
         </div>
         <div class="view-content invoice-view-content">
             <div class="content-header mobile-header">
-                <p>Status</p>
-                <div class="status" :class="`${invoice.status}`">
-                    <div class="indicator"></div>
-                    <h4 class="status-label">{{ invoice.status }}</h4>
+                <div class="status-container">
+                    <p>Status</p>
+                    <div class="status" :class="`${invoice.status}`">
+                        <div class="indicator"></div>
+                        <h4 class="status-label">{{ invoice.status }}</h4>
+                    </div>
+                </div>
+                <div class="actions-container flex-hide-mobile">
+                    <button class="button button-theme-primary">Edit</button>
+                    <button class="button button-danger">Delete</button>
+                    <button class="button button-primary">Mark as Paid</button>
                 </div>
             </div>
             <div class="invoice-details">
@@ -65,11 +72,19 @@
                 </div>
                 <div class="invoice-items-container">
                     <div class="items-list">
+                        <div class="item-labels grid-hide-mobile">
+                            <p>Item Name</p>
+                            <p class="text-right">QTY.</p>
+                            <p class="text-right">Price</p>
+                            <p class="text-right">Total</p>
+                        </div>
                         <div class="item" v-for="(item, index) of invoice.items" :key="index">
                             <div class="item-details">
                                 <h4 class="item-name">{{ item.name }}</h4>
-                                <h4 class="item-quantity">{{ item.quantity }} x {{ item.price }}</h4>
+                                <h4 class="item-quantity block-hide-tablet">{{ item.quantity }} x {{ item.price }}</h4>
                             </div>
+                            <p class="quantity block-hide-mobile">{{ item.quantity }}</p>
+                            <p class="price block-hide-mobile">$ {{ item.price }}</p>
                             <div class="item-total">
                                 <h4>$ {{ item.total.toFixed(2).toLocaleString() }}</h4>
                             </div>
@@ -80,6 +95,11 @@
                         <h1>$ {{ invoice.total.toFixed(2).toLocaleString() }}</h1>
                     </div>
                 </div>
+            </div>
+            <div class="mobile-actions-container flex-hide-tablet">
+                <button class="button button-theme-primary">Edit</button>
+                <button class="button button-danger">Delete</button>
+                <button class="button button-primary">Mark as Paid</button>
             </div>
         </div>
     </div>
@@ -95,7 +115,15 @@
             text-decoration: none;
             color: var(--color-text);
         }
+        .status-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+        }
         .invoice-view-content {
+            position: relative;
             .content-header {
                 display: flex;
                 flex-direction: row;
@@ -160,11 +188,33 @@
                     flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
+                    h1 {
+                        color: #FFFFFF;
+                    }
                 }
             }
         }
+        .mobile-actions-container {
+            margin-top: 2rem;
+            background-color: var(--color-field-background);
+            position: absolute;
+            bottom: -9rem;
+            left: -2rem;
+            width: calc(100% + 4rem);
+            padding: 16px 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
     }
     @media screen and (min-width: 768px) {
+        .status-container {
+            width: fit-content;
+            gap: 1rem;
+        }
+        .actions-container {
+            gap: 1rem;
+        }
         .invoice-view-content {
             .invoice-overview {
                 display: flex;
@@ -176,6 +226,18 @@
             }
             .billing-details {
                 gap: 8rem;
+            }
+            .item-labels {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .invoice-items-container {
+                .item {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    .quantity, .price, .item-total {
+                        text-align: right;
+                    }
+                }
             }
         }
     }

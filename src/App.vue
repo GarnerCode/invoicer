@@ -20,8 +20,8 @@
 
     --color-button-theme-primary: #F9FAFE;
     --color-button-theme-primary-text: #7E88C3;
-    --color-button-theme-primary-hover: #252945;
-    --color-button-theme-primary-text-hover: #DFE3FA;
+    --color-button-theme-primary-hover: #DFE3FA;
+    --color-button-theme-primary-text-hover: #7E88C3;
 
     --color-button-theme-secondary: #373B53;
     --color-button-theme-secondary-text: #888EB0;
@@ -67,8 +67,9 @@
     --color-text: #FFFFFF;
     --color-navbar: #1E2139;
 
-    --color-button-theme-primary: #DFE3FA;
+    --color-button-theme-primary: #252945;
     --color-button-theme-primary-hover: #FFFFFF;
+    --color-button-theme-primary-text-hover: #DFE3FA;
 
     --color-button-theme-secondary: #0C0E16;
     --color-button-theme-secondary-hover: #1E2139;
@@ -265,6 +266,9 @@
     .flex-hide-mobile {
       display: none !important;
     }
+    .grid-hide-mobile {
+      display: none;
+    }
     .view-content {
       margin-top: 2rem;
     }
@@ -291,6 +295,15 @@
     }
     .flex-hide-mobile {
       display: flex !important;
+    }
+    .grid-hide-mobile {
+      display: grid !important;
+    }
+    .text-right {
+      text-align: right;
+    }
+    .flex-hide-tablet {
+      display: none !important;
     }
   }
   @media screen and (min-width: 1440px) {
