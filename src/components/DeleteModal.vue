@@ -37,7 +37,7 @@
             flex-direction: column;
             gap: 1rem;
             justify-content: center;
-            width: 327px;
+            width: calc(327px - 64px);
             position: absolute;
             left: 0;
             right: 0;

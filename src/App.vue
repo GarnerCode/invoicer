@@ -39,6 +39,7 @@
     --color-button-danger-hover: #FF9797;
 
     --color-field-background: #FFFFFF;
+    --color-field-label: #7E88C3;
     --color-field-text: #0C0E16;
     --color-field-border: #DFE3FA;
     --color-field-border-active: #7C5DFA;
@@ -79,6 +80,7 @@
     --color-button-theme-secondary-hover: #1E2139;
 
     --color-field-background: #1E2139;
+    --color-field-label: #888EB0;
     --color-field-text: #FFFFFF;
     --color-field-border: #252945;
     --color-field-border-active: #252945;
@@ -164,10 +166,12 @@
     .button {
       border: none;
       border-radius: 24px;
+      font-family: var(--font-family-primary);
       font-size: 15px;
       font-weight: bold;
       padding: 16.5px 27.5px;
       transition: var(--transition);
+      text-decoration: none;
       cursor: pointer;
       // Button 1 & Button 2
       &.button-primary {

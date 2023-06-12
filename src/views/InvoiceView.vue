@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="mobile-actions-container flex-hide-tablet">
-                <button class="button button-theme-primary">Edit</button>
+                <RouterLink :to="`/edit-invoice/${invoice.id}`" class="button button-theme-primary">Edit</RouterLink>
                 <button class="button button-danger" @click="globalStore.setDeleteModalToggled(true)">Delete</button>
                 <button @click="globalStore.updateInvoiceStatusById(invoice.id, statusEnum.PENDING)" v-if="invoice.status === statusEnum.DRAFT" class="button button-primary">Mark as Pending</button>
                 <button @click="globalStore.updateInvoiceStatusById(invoice.id, statusEnum.PAID)" v-if="invoice.status === statusEnum.PENDING" class="button button-primary">Mark as Paid</button>
