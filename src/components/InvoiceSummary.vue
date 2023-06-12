@@ -7,7 +7,7 @@
         <div class="row">
             <div class="column">
                 <p>Due {{ invoice.paymentDue }}</p>
-                <h3>${{ invoice.total.toLocaleString() }}</h3>
+                <h3>{{ formatCurrency(invoice.total) }}</h3>
             </div>
             <div class="status" :class="`${invoice.status}`">
                 <div class="indicator"></div>
@@ -20,7 +20,7 @@
         <h4><span class="highlight">#</span>{{ invoice.id }}</h4>
         <p>Due {{ invoice.paymentDue }}</p>
         <p>{{ invoice.clientName }}</p>
-        <h3>${{ invoice.total.toFixed(2).toLocaleString() }}</h3>
+        <h3>{{ formatCurrency(invoice.total) }}</h3>
         <div class="status" :class="`${invoice.status}`">
             <div class="indicator"></div>
             <h4 class="status-label">{{ invoice.status }}</h4>
@@ -134,12 +134,13 @@
 <script lang="ts">
     import { defineComponent } from 'vue';
     import { Invoice } from '@/models/Invoice.interface';
+    import { formatCurrency } from '@/utils/utils';
 
     export default defineComponent({
         name: 'InvoiceSummary',
         data: () => {
             return {
-
+                formatCurrency,
             }
         },
         props: {

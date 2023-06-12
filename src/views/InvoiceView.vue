@@ -17,8 +17,9 @@
                 </div>
                 <div class="actions-container flex-hide-mobile">
                     <button class="button button-theme-primary">Edit</button>
-                    <button class="button button-danger">Delete</button>
-                    <button class="button button-primary">Mark as Paid</button>
+                    <button class="button button-danger" @click="globalStore.setDeleteModalToggled(true)">Delete</button>
+                    <button @click="globalStore.updateInvoiceStatusById(invoice.id, statusEnum.PENDING)" v-if="invoice.status === statusEnum.DRAFT" class="button button-primary">Mark as Pending</button>
+                    <button @click="globalStore.updateInvoiceStatusById(invoice.id, statusEnum.PAID)" v-if="invoice.status === statusEnum.PENDING" class="button button-primary">Mark as Paid</button>
                 </div>
             </div>
             <div class="invoice-details">
@@ -81,25 +82,26 @@
                         <div class="item" v-for="(item, index) of invoice.items" :key="index">
                             <div class="item-details">
                                 <h4 class="item-name">{{ item.name }}</h4>
-                                <h4 class="item-quantity block-hide-tablet">{{ item.quantity }} x {{ item.price }}</h4>
+                                <h4 class="item-quantity block-hide-tablet">{{ item.quantity }} x {{ formatCurrency(item.price) }}</h4>
                             </div>
                             <p class="quantity block-hide-mobile">{{ item.quantity }}</p>
-                            <p class="price block-hide-mobile">$ {{ item.price }}</p>
+                            <p class="price block-hide-mobile">{{ formatCurrency(item.price) }}</p>
                             <div class="item-total">
-                                <h4>$ {{ item.total.toFixed(2).toLocaleString() }}</h4>
+                                <h4>{{ formatCurrency(item.total) }}</h4>
                             </div>
                         </div>
                     </div>
                     <div class="total-due">
                         <p>Amount Due</p>
-                        <h1>$ {{ invoice.total.toFixed(2).toLocaleString() }}</h1>
+                        <h1>{{ formatCurrency(invoice.total) }}</h1>
                     </div>
                 </div>
             </div>
             <div class="mobile-actions-container flex-hide-tablet">
                 <button class="button button-theme-primary">Edit</button>
-                <button class="button button-danger">Delete</button>
-                <button class="button button-primary">Mark as Paid</button>
+                <button class="button button-danger" @click="globalStore.setDeleteModalToggled(true)">Delete</button>
+                <button @click="globalStore.updateInvoiceStatusById(invoice.id, statusEnum.PENDING)" v-if="invoice.status === statusEnum.DRAFT" class="button button-primary">Mark as Pending</button>
+                <button @click="globalStore.updateInvoiceStatusById(invoice.id, statusEnum.PAID)" v-if="invoice.status === statusEnum.PENDING" class="button button-primary">Mark as Paid</button>
             </div>
         </div>
     </div>
@@ -248,6 +250,8 @@
     import { defineComponent } from 'vue';
     import { useGlobalStore } from '@/store/globalStore';
     import { Invoice } from '@/models/Invoice.interface';
+    import { statusEnum } from '@/enum/status.enum';
+    import { formatCurrency } from '@/utils/utils';
 
     export default defineComponent({
         name: 'InvoiceView',
@@ -255,6 +259,8 @@
             return {
                 globalStore: useGlobalStore(),
                 invoice: null as Invoice | null,
+                statusEnum,
+                formatCurrency,
             }
         },
         mounted() {

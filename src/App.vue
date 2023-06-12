@@ -1,6 +1,9 @@
 <template>
   <div id="app-container">
     <Loading v-if="globalStore.getLoading && !globalStore.getInvoiceList.length"></Loading>
+    <Transition name="fade">
+      <DeleteModal v-if="globalStore.getDeleteModalToggled"></DeleteModal>
+    </Transition>
     <Navbar :userTheme="userTheme"></Navbar>
     <div v-if="!globalStore.getLoading && globalStore.getInvoiceList.length" id="view-container">
       <router-view/>
@@ -39,6 +42,7 @@
     --color-field-text: #0C0E16;
     --color-field-border: #DFE3FA;
     --color-field-border-active: #7C5DFA;
+    --color-checkbox: #DFE3FA;
 
     --color-dropdown-popup: #FFFFFF;
     --dropdown-popup-box-shadow: 0 10px 20px rgba(72, 84, 159, 0.25);
@@ -78,6 +82,7 @@
     --color-field-text: #FFFFFF;
     --color-field-border: #252945;
     --color-field-border-active: #252945;
+    --color-checkbox: #1E2139;
 
     --color-dropdown-popup: #252945;
     --dropdown-popup-box-shadow: 0 0 0 rgba(0,0,0,0);
@@ -329,12 +334,14 @@
   import { defineComponent } from 'vue';
   import { useGlobalStore } from './store/globalStore';
   import Loading from './components/Loading.vue';
+  import DeleteModal from './components/DeleteModal.vue';
   import Navbar from './components/Navbar.vue';
 
   export default defineComponent({
     name: 'App',
     components: {
       Loading,
+      DeleteModal,
       Navbar,
     },
     data: () => {

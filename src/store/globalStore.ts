@@ -8,6 +8,7 @@ export const useGlobalStore = defineStore('globalStore', {
             invoicesLoading: true,
             invoiceList: [] as Array<Invoice>,
             filteredInvoiceList: [] as Array<Invoice>,
+            toggleDeleteModal: false,
         }
     },
     getters: {
@@ -17,10 +18,13 @@ export const useGlobalStore = defineStore('globalStore', {
         getInvoiceList: (state): Array<Invoice> => {
             return state.invoiceList;
         },
+        getDeleteModalToggled: (state): boolean => {
+            return state.toggleDeleteModal;
+        },
     },
     actions: {
         async fetchInvoices(): Promise<void> {
-            const { data, error } = await supabase
+            const { data } = await supabase
             .from('invoices')
             .select();
             if (data) {
@@ -39,6 +43,25 @@ export const useGlobalStore = defineStore('globalStore', {
             return this.getInvoiceList.find((invoice: Invoice) => {
                 return invoice.id === id;
             });
+        },
+        setDeleteModalToggled(payload: boolean): void {
+            this.toggleDeleteModal = payload;
+        },
+        async deleteInvoiceById(id: string): Promise<void> {
+            console.log('ID deleted: ', id);
+        },
+        async updateInvoiceStatusById(id: string, status: string): Promise<void> {
+            const updatedInvoice = this.getInvoiceById(id);
+            updatedInvoice.status = status;
+            const { error } = await supabase
+            .from('invoices')
+            .update(updatedInvoice)
+            .eq('id', id);
+            if (error) {
+                console.error(error);
+            } else {
+                this.fetchInvoices();
+            }
         }
     },
 })
