@@ -93,9 +93,43 @@
                         </div>
                         <input v-model="formModel.items[index].name" class="field-input" type="text" :name="`item${index}-name`">
                     </div>
+                    <div class="fields-row">
+                        <div class="field field-quantity">
+                            <div class="label-container">
+                                <label :for="`item${index}-quantity`">Qty.</label>
+                            </div>
+                            <input v-model="formModel.items[index].quantity" class="field-input" type="number" :name="`item${index}-quantity`">
+                        </div>
+                        <div class="field field-price">
+                            <div class="label-container">
+                                <label :for="`item${index}-price`">Price</label>
+                            </div>
+                            <input v-model="formModel.items[index].price" class="field-input" type="number" :name="`item${index}-price`">
+                        </div>
+                        <div class="field">
+                            <div class="label-container">
+                                <label :for="`item${index}-total`">Total</label>
+                            </div>
+                            <h4 class="item-total">
+                                {{ formatCurrency(formModel.items[index].price * formModel.items[index].quantity) }}
+                            </h4>
+                        </div>
+                        <div class="delete-item">
+                            <svg width="13" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z" fill-rule="nonzero"/></svg>
+                        </div>
+                    </div>
                 </div>
+                <button class="button button-theme-primary">
+                    <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M6.313 10.023v-3.71h3.71v-2.58h-3.71V.023h-2.58v3.71H.023v2.58h3.71v3.71z" fill="#7C5DFA" fill-rule="nonzero"/></svg>
+                    Add New Item
+                </button>
             </section>
         </form>
+        <div class="mobile-actions-container">
+            <button class="button button-theme-primary">Discard</button>
+            <button class="button button-theme-secondary">Save as Draft</button>
+            <button class="button button-primary">Save & Send</button>
+        </div>
     </div>
 </template>
 
@@ -120,6 +154,12 @@
             gap: 2rem;
             .field {
                 width: calc(50% - 1rem);
+                &.field-quantity {
+                    width: 64px;
+                }
+                &.field-price {
+                    width: 100px;
+                }
             }
         }
         .items-section {
@@ -131,12 +171,36 @@
             font-weight: bold;
             color: var(--color-field-label);
         }
+        .item {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .item-total, .delete-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 48px;
+        }
+        .delete-item {
+            height: 77px;
+            svg {
+                cursor: pointer;
+                transition: var(--transition);
+                fill: var(--color-field-label);
+                &:hover {
+                    fill: var(--color-button-danger);
+                }
+            }
+        }
     }
 </style>
 
 <script lang="ts">
     import { Invoice } from '@/models/Invoice.interface';
     import { defineComponent } from 'vue';
+    import { formatCurrency } from '@/utils/utils';
     import DateSelector from './DateSelector.vue';
     import Dropdown from './Dropdown.vue';
 
@@ -144,6 +208,7 @@
         name: 'InvoiceForm',
         data: () => {
             return {
+                formatCurrency,
                 formModel: {} as Invoice,
                 paymentTerms: [
                     'Net 1 Day',
