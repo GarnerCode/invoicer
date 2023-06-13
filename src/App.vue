@@ -169,7 +169,7 @@
       font-family: var(--font-family-primary);
       font-size: 15px;
       font-weight: bold;
-      padding: 16.5px 27.5px;
+      padding: 16.5px 18.5px;
       transition: var(--transition);
       text-decoration: none;
       cursor: pointer;

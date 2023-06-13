@@ -1,7 +1,7 @@
 <template>
     <div class="invoice-form-container">
-        <h2 v-if="!invoice">New Invoice</h2>
-        <h2 v-if="invoice">Edit #{{ invoice.id }}</h2>
+        <h2 v-if="!invoice.id.length">New Invoice</h2>
+        <h2 v-if="invoice.id.length">Edit #{{ invoice.id }}</h2>
         <form class="invoice-form">
 
             <h4 class="section-header">Bill From</h4>
@@ -115,20 +115,21 @@
                             </h4>
                         </div>
                         <div class="delete-item">
-                            <svg width="13" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z" fill-rule="nonzero"/></svg>
+                            <svg @click="deleteItem(index)" width="13" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z" fill-rule="nonzero"/></svg>
                         </div>
                     </div>
                 </div>
-                <button class="button button-theme-primary">
+                <button @click="(e) => addNewItem(e)" class="button button-theme-primary">
                     <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M6.313 10.023v-3.71h3.71v-2.58h-3.71V.023h-2.58v3.71H.023v2.58h3.71v3.71z" fill="#7C5DFA" fill-rule="nonzero"/></svg>
                     Add New Item
                 </button>
             </section>
         </form>
         <div class="mobile-actions-container">
-            <button class="button button-theme-primary">Discard</button>
-            <button class="button button-theme-secondary">Save as Draft</button>
-            <button class="button button-primary">Save & Send</button>
+            <RouterLink v-if="invoice" class="button button-theme-primary" :to="`/invoice/${invoice.id}`">Discard</RouterLink>
+            <RouterLink v-if="!invoice" class="button button-theme-primary" to="/">Discard</RouterLink>
+            <button @click="saveInvoice(true)" class="button button-theme-secondary">Save as Draft</button>
+            <button @click="saveInvoice(false)" class="button button-primary">Save & Send</button>
         </div>
     </div>
 </template>
@@ -198,9 +199,10 @@
 </style>
 
 <script lang="ts">
-    import { Invoice } from '@/models/Invoice.interface';
+    import { Invoice, InvoiceItem } from '@/models/Invoice.interface';
     import { defineComponent } from 'vue';
     import { formatCurrency } from '@/utils/utils';
+    import { newInvoice } from '@/const/newInvoice';
     import DateSelector from './DateSelector.vue';
     import Dropdown from './Dropdown.vue';
 
@@ -230,7 +232,27 @@
         created() {
             if (this.invoice) {
                 this.formModel = JSON.parse(JSON.stringify(this.invoice));
+            } else {
+                this.formModel = newInvoice as Invoice;
             }
         },
+        methods: {
+            deleteItem(index: number): void {
+                this.formModel.items.splice(index, 1);
+            },
+            addNewItem(e: Event): void {
+                e.preventDefault();
+                const newItem = {
+                    name: '',
+                    quantity: 1,
+                    price: 0,
+                    total: 0,
+                } as InvoiceItem;
+                this.formModel.items.push(newItem);
+            },
+            saveInvoice(draft: boolean): void {
+                this.$emit('saveInvoice', this.formModel, draft);
+            }
+        }
     })
 </script>

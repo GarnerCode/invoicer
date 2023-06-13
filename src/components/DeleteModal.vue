@@ -6,7 +6,7 @@
             <p>Are you sure you want to delete invoice<br/> #{{ id }}? This action cannot be undone.</p>
             <div class="modal-actions">
                 <button @click="globalStore.setDeleteModalToggled(false)" class="button button-theme-primary">Cancel</button>
-                <button @click="globalStore.deleteInvoiceById(id)" class="button button-danger">Delete</button>
+                <button @click="deleteInvoice()" class="button button-danger">Delete</button>
             </div>
         </div>
     </div>
@@ -66,6 +66,13 @@
         },
         mounted() {
             this.id = this.$route.params.id;
+        },
+        methods: {
+            async deleteInvoice(): Promise<void> {
+                await this.globalStore.deleteInvoiceById(this.id);
+                this.globalStore.setDeleteModalToggled(false);
+                this.$router.push('/');
+            }
         }
     })
 </script>

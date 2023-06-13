@@ -265,7 +265,6 @@
         },
         mounted() {
             this.invoice = this.globalStore.getInvoiceById(this.$route.params.id);
-            console.log('Target: ', this.invoice);
         }
     })
 </script>

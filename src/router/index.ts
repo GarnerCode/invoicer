@@ -15,10 +15,15 @@ const routes: Array<RouteRecordRaw> = [
     component: InvoiceView,
   },
   {
+    path: '/edit-invoice/new',
+    name: 'new-invoice',
+    component: EditInvoiceView,
+  },
+  {
     path: '/edit-invoice/:id',
     name: 'edit-invoice',
     component: EditInvoiceView,
-  }
+  },
 ]
 
 const router = createRouter({
