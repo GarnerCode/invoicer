@@ -58,6 +58,8 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            position: relative;
+            z-index: 100;
             .logo {
                 background-color: var(--color-primary);
                 width: 72px;
@@ -207,6 +209,8 @@
             width: 103px;
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
+            position: absolute;
+            left: 0;
             .logo {
                 width: 103px;
                 height: 103px;

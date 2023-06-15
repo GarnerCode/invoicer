@@ -4,6 +4,9 @@
     <Transition name="fade">
       <DeleteModal v-if="globalStore.getDeleteModalToggled"></DeleteModal>
     </Transition>
+    <Transition name="modal-slide">
+      <InvoiceFormModal v-if="globalStore.getFormModalToggled"></InvoiceFormModal>
+    </Transition>
     <Navbar :userTheme="userTheme"></Navbar>
     <div v-if="!globalStore.getLoading && globalStore.getInvoiceList.length" id="view-container">
       <router-view/>
@@ -246,7 +249,7 @@
       .field-input {
         // padding: 16.5px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         padding: 0 16.5px;
         height: 48px;
         font-size: 15px;
@@ -314,6 +317,12 @@
     .flex-hide-tablet {
       display: none !important;
     }
+    .modal-slide-enter-from, .modal-slide-leave-to {
+      opacity: 0;
+    }
+    .modal-slide-enter-active, .modal-slide-leave-active {
+      transition: var(--transition);
+    }
   }
   @media screen and (min-width: 1440px) {
     #app-container {
@@ -339,6 +348,7 @@
   import { useGlobalStore } from './store/globalStore';
   import Loading from './components/Loading.vue';
   import DeleteModal from './components/DeleteModal.vue';
+  import InvoiceFormModal from './components/InvoiceFormModal.vue';
   import Navbar from './components/Navbar.vue';
 
   export default defineComponent({
@@ -346,6 +356,7 @@
     components: {
       Loading,
       DeleteModal,
+      InvoiceFormModal,
       Navbar,
     },
     data: () => {

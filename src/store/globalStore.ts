@@ -10,6 +10,8 @@ export const useGlobalStore = defineStore('globalStore', {
             invoiceList: [] as Array<Invoice>,
             filteredInvoiceList: [] as Array<Invoice>,
             toggleDeleteModal: false,
+            toggleFormModal: false,
+            targetInvoice: null,
         }
     },
     getters: {
@@ -21,6 +23,12 @@ export const useGlobalStore = defineStore('globalStore', {
         },
         getDeleteModalToggled: (state): boolean => {
             return state.toggleDeleteModal;
+        },
+        getFormModalToggled: (state): boolean => {
+            return state.toggleFormModal;
+        },
+        getTargetInvoice: (state): Invoice | null => {
+            return state.targetInvoice;
         },
     },
     actions: {
@@ -47,6 +55,10 @@ export const useGlobalStore = defineStore('globalStore', {
         },
         setDeleteModalToggled(payload: boolean): void {
             this.toggleDeleteModal = payload;
+        },
+        setFormModalToggled(toggle: boolean, invoice: Invoice | null): void {
+            this.toggleFormModal = toggle;
+            this.targetInvoice = invoice;
         },
         getUniqueId(): string {
             let unique = false;
@@ -83,14 +95,24 @@ export const useGlobalStore = defineStore('globalStore', {
             const { error } = await supabase
             .from('invoices')
             .insert(payload);
-            error ? console.error(error) : await this.fetchInvoices();
+            if (error) {
+                console.error(error);
+            } else {
+                await this.fetchInvoices();
+                this.setFormModalToggled(false, null);
+            }
         },
         async editInvoice(payload: Invoice): Promise<void> {
             const { error } = await supabase
             .from('invoices')
             .update(payload)
             .eq('id', payload.id);
-            error ? console.error(error) : await this.fetchInvoices();
+            if (error) {
+                console.error(error);
+            } else {
+                await this.fetchInvoices();
+                this.setFormModalToggled(false, null);
+            }
         }
     },
 })

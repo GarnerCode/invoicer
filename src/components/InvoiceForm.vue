@@ -125,11 +125,20 @@
                 </button>
             </section>
         </form>
-        <div class="mobile-actions-container">
+        <div class="mobile-actions-container flex-hide-tablet">
             <RouterLink v-if="invoice" class="button button-theme-primary" :to="`/invoice/${invoice.id}`">Discard</RouterLink>
             <RouterLink v-if="!invoice" class="button button-theme-primary" to="/">Discard</RouterLink>
             <button @click="saveInvoice(true)" class="button button-theme-secondary">Save as Draft</button>
             <button @click="saveInvoice(false)" class="button button-primary">Save & Send</button>
+        </div>
+        <div class="actions-container flex-hide-mobile">
+            <div class="left">
+                <button @click="globalStore.setFormModalToggled(false, null)" class="button button-theme-primary">Discard</button>
+            </div>
+            <div class="right">
+                <button @click="saveInvoice(true)" class="button button-theme-secondary">Save as Draft</button>
+                <button @click="saveInvoice(false)" class="button button-primary">Save & Send</button>
+            </div>
         </div>
     </div>
 </template>
@@ -196,6 +205,42 @@
             }
         }
     }
+    @media screen and (min-width: 768px) {
+        .invoice-form-container {
+            padding: 3rem;
+            .mobile-actions-container {
+                display: none;
+            }
+            .actions-container {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: calc(616px - 6rem);
+                margin-left: 3rem;
+                background-color: var(--color-background);
+                padding: 2rem 0;
+                .right {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 1rem;
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 1440px) {
+        .invoice-form-container {
+            .actions-container {
+                width: 100%;
+                position: static;
+                margin: 0;
+                margin-top: 4rem;
+                padding-bottom: 0;
+            }
+        }
+    }
 </style>
 
 <script lang="ts">
@@ -203,6 +248,7 @@
     import { defineComponent } from 'vue';
     import { formatCurrency } from '@/utils/utils';
     import { newInvoice } from '@/const/newInvoice';
+    import { useGlobalStore } from '@/store/globalStore';
     import DateSelector from './DateSelector.vue';
     import Dropdown from './Dropdown.vue';
 
@@ -218,6 +264,7 @@
                     'Net 14 Days',
                     'Net 30 Days',
                 ],
+                globalStore: useGlobalStore(),
             }
         },
         components: {

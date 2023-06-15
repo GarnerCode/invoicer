@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="actions-container flex-hide-mobile">
-                    <button class="button button-theme-primary">Edit</button>
+                    <button @click="globalStore.setFormModalToggled(true, invoice)" class="button button-theme-primary">Edit</button>
                     <button class="button button-danger" @click="globalStore.setDeleteModalToggled(true)">Delete</button>
                     <button @click="globalStore.updateInvoiceStatusById(invoice.id, statusEnum.PENDING)" v-if="invoice.status === statusEnum.DRAFT" class="button button-primary">Mark as Pending</button>
                     <button @click="globalStore.updateInvoiceStatusById(invoice.id, statusEnum.PAID)" v-if="invoice.status === statusEnum.PENDING" class="button button-primary">Mark as Paid</button>
