@@ -359,11 +359,7 @@
     },
     mounted() {
       document.addEventListener('themeEvent', () => {
-        if (this.userTheme === "light-theme") {
-          this.setTheme("dark-theme");
-        } else {
-          this.setTheme("light-theme");
-        }
+        this.userTheme === "light-theme" ? this.setTheme("dark-theme") : this.setTheme("light-theme");
       });
       const initUserTheme = this.getMediaPreference();
       this.setTheme(initUserTheme);

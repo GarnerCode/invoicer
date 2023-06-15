@@ -230,11 +230,7 @@
             }
         },
         created() {
-            if (this.invoice) {
-                this.formModel = JSON.parse(JSON.stringify(this.invoice));
-            } else {
-                this.formModel = newInvoice as Invoice;
-            }
+            this.invoice ? this.formModel = JSON.parse(JSON.stringify(this.invoice)) : this.formModel = newInvoice as Invoice;
         },
         methods: {
             deleteItem(index: number): void {

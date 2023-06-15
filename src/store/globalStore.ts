@@ -75,11 +75,7 @@ export const useGlobalStore = defineStore('globalStore', {
             .from('invoices')
             .update(updatedInvoice)
             .eq('id', id);
-            if (error) {
-                console.error(error);
-            } else {
-                await this.fetchInvoices();
-            }
+            error ? console.error(error) : await this.fetchInvoices();
         },
         async createNewInvoice(payload: Invoice): Promise<void> {
             console.log('Running create invoice');
@@ -87,22 +83,14 @@ export const useGlobalStore = defineStore('globalStore', {
             const { error } = await supabase
             .from('invoices')
             .insert(payload);
-            if (error) {
-                console.error(error);
-            } else {
-                await this.fetchInvoices();
-            }
+            error ? console.error(error) : await this.fetchInvoices();
         },
         async editInvoice(payload: Invoice): Promise<void> {
             const { error } = await supabase
             .from('invoices')
             .update(payload)
             .eq('id', payload.id);
-            if (error) {
-                console.error(error);
-            } else {
-                await this.fetchInvoices();
-            }
+            error ? console.error(error) : await this.fetchInvoices();
         }
     },
 })
