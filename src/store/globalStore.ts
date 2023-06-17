@@ -9,6 +9,7 @@ export const useGlobalStore = defineStore('globalStore', {
             invoicesLoading: true,
             invoiceList: [] as Array<Invoice>,
             filteredInvoiceList: [] as Array<Invoice>,
+            activeFilters: [] as Array<string>,
             toggleDeleteModal: false,
             toggleFormModal: false,
             targetInvoice: null,
@@ -20,6 +21,12 @@ export const useGlobalStore = defineStore('globalStore', {
         },
         getInvoiceList: (state): Array<Invoice> => {
             return state.invoiceList;
+        },
+        getFilteredInvoiceList: (state): Array<Invoice> => {
+            return state.filteredInvoiceList;
+        },
+        getActiveFilters: (state): Array<string> => {
+            return state.activeFilters;
         },
         getDeleteModalToggled: (state): boolean => {
             return state.toggleDeleteModal;
@@ -47,6 +54,9 @@ export const useGlobalStore = defineStore('globalStore', {
         },
         setFilteredInvoiceList(payload: Array<Invoice>): void {
             this.filteredInvoiceList = payload;
+        },
+        setActiveFilters(payload: Array<string>): void {
+            this.activeFilters = payload;
         },
         getInvoiceById(id: string): Invoice {
             return this.getInvoiceList.find((invoice: Invoice) => {

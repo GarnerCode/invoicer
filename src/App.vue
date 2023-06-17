@@ -48,6 +48,8 @@
     --color-field-border-active: #7C5DFA;
     --color-checkbox: #DFE3FA;
 
+    --color-scrollbar: #DFE3FA;
+
     --color-dropdown-popup: #FFFFFF;
     --dropdown-popup-box-shadow: 0 10px 20px rgba(72, 84, 159, 0.25);
     --dropdown-popup-options-border: 1px solid #DFE3FA;
@@ -89,6 +91,8 @@
     --color-field-border-active: #252945;
     --color-checkbox: #1E2139;
 
+    --color-scrollbar: #252945;
+
     --color-dropdown-popup: #252945;
     --dropdown-popup-box-shadow: 0 0 0 rgba(0,0,0,0);
     --dropdown-popup-options-border: 1px solid #1E2139;
@@ -124,6 +128,16 @@
   .flex-row {
     display: flex;
     flex-direction: row;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-scrollbar);
+    border-radius: 4px;
   }
   @media screen and (min-width: 0px) {
     h1 {

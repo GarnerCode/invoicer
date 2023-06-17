@@ -6,15 +6,15 @@
         </div>
         <div v-if="filtersToggled" class="filter-options-container">
             <div class="filter-option">
-                <input type="checkbox">
+                <input @click="filterInvoices('draft')" type="checkbox">
                 <h4>Draft</h4>
             </div>
             <div class="filter-option">
-                <input type="checkbox">
+                <input @click="filterInvoices('pending')" type="checkbox">
                 <h4>Pending</h4>
             </div>
             <div class="filter-option">
-                <input type="checkbox">
+                <input @click="filterInvoices('paid')" type="checkbox">
                 <h4>Paid</h4>
             </div>
         </div>
@@ -75,6 +75,7 @@
 <script lang="ts">
     import { defineComponent } from 'vue';
     import { useGlobalStore } from '@/store/globalStore';
+    import { Invoice } from '@/models/Invoice.interface';
 
     export default defineComponent({
         name: 'Filter',
@@ -82,12 +83,34 @@
             return {
                 globalStore: useGlobalStore(),
                 filtersToggled: false,
+                activeFilters: [] as Array<string>,
             }
         },
         props: {
             filterBy: {
                 type: String,
             }
+        },
+        methods: {
+            filterInvoices(value: string): void {
+                if (!this.activeFilters.includes(value)) {
+                    this.activeFilters.push(value);
+                } else {
+                    const index = this.activeFilters.indexOf(value);
+                    this.activeFilters.splice(index, 1);
+                }
+                if (this.activeFilters.length) {
+                    const filteredInvoices = this.globalStore.getInvoiceList.filter((invoice: Invoice) => {
+                        if (this.activeFilters.includes(invoice.status)) {
+                            return invoice
+                        }
+                    });
+                    this.globalStore.setFilteredInvoiceList(filteredInvoices);
+                } else {
+                    this.globalStore.setFilteredInvoiceList(this.globalStore.getInvoiceList);
+                }
+                console.log('filtered: ', this.globalStore.getFilteredInvoiceList);
+            },
         }
     })
 </script>

@@ -265,6 +265,16 @@
         },
         mounted() {
             this.invoice = this.globalStore.getInvoiceById(this.$route.params.id);
+        },
+        watch: {
+            'globalStore.getInvoiceList': {
+                handler: function (val) {
+                    if (val) {
+                        this.invoice = this.globalStore.getInvoiceById(this.$route.params.id);
+                    }
+                },
+                deep: true,
+            }
         }
     })
 </script>

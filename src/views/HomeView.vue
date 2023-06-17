@@ -3,8 +3,8 @@
     <div class="view-header">
       <div class="left">
         <h1>Invoices</h1>
-        <p v-if="!globalStore.getInvoiceList.length">No invoices</p>
-        <p v-if="globalStore.getInvoiceList.length">{{ globalStore.getInvoiceList.length }} invoice<span v-if="globalStore.getInvoiceList.length > 1">s</span></p>
+        <p v-if="!globalStore.getFilteredInvoiceList.length">No invoices</p>
+        <p v-if="globalStore.getFilteredInvoiceList.length">{{ globalStore.getFilteredInvoiceList.length }} invoice<span v-if="globalStore.getFilteredInvoiceList.length > 1">s</span></p>
       </div>
       <div class="actions flex-row">
         <Filter filterBy="by status"></Filter>
@@ -27,13 +27,13 @@
       </div>
     </div>
     <div class="view-content home-view-content">
-      <div v-if="!globalStore.getInvoiceList.length" class="no-content">
+      <div v-if="!globalStore.getFilteredInvoiceList.length" class="no-content">
         <img src="@/assets/illustration-empty.svg" alt="No invoices illustration">
         <h2>There is nothing here</h2>
         <p>Create an invoice by clicking the<br/> New <span class="inline-hide-mobile">invoice</span> button and get started</p>
       </div>
-      <div v-if="globalStore.getInvoiceList.length" class="invoice-list">
-        <InvoiceSummary v-for="invoice of globalStore.getInvoiceList" :key="invoice.id" :invoice="invoice"></InvoiceSummary>
+      <div v-if="globalStore.getFilteredInvoiceList.length" class="invoice-list">
+        <InvoiceSummary v-for="invoice of globalStore.getFilteredInvoiceList" :key="invoice.id" :invoice="invoice"></InvoiceSummary>
       </div>
     </div>
   </div>

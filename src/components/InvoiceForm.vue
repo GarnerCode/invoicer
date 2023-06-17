@@ -294,6 +294,14 @@
                 this.formModel.items.push(newItem);
             },
             saveInvoice(draft: boolean): void {
+                const items = this.formModel.items;
+                let total = 0;
+                items.forEach((item: InvoiceItem) => {
+                    item.total = item.quantity * item.price;
+                    total += item.total;
+                });
+                this.formModel.items = items;
+                this.formModel.total = total;
                 this.$emit('saveInvoice', this.formModel, draft);
             }
         }
