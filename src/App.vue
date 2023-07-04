@@ -42,6 +42,8 @@
     --color-field-text: #0C0E16;
     --color-field-border: #DFE3FA;
     --color-field-border-active: #7C5DFA;
+    --color-filters-background: #FFFFFF;
+    --color-filters-shadow: rgba(72, 84, 159, 0.25);
     --color-checkbox: #DFE3FA;
 
     --color-scrollbar: #DFE3FA;
@@ -85,6 +87,8 @@
     --color-field-text: #FFFFFF;
     --color-field-border: #252945;
     --color-field-border-active: #252945;
+    --color-filters-background: #252945;
+    --color-filters-shadow: rgba(0,0,0,0.25);
     --color-checkbox: #1E2139;
 
     --color-scrollbar: #252945;
