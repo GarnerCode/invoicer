@@ -126,14 +126,13 @@
             </section>
         </form>
         <div class="mobile-actions-container flex-hide-tablet">
-            <RouterLink v-if="invoice" class="button button-theme-primary" :to="`/invoice/${invoice.id}`">Discard</RouterLink>
-            <RouterLink v-if="!invoice" class="button button-theme-primary" to="/">Discard</RouterLink>
+            <RouterLink v-if="!invoice.id" class="button button-theme-primary" to="/">Discard</RouterLink>
             <button @click="saveInvoice(true)" class="button button-theme-secondary">Save as Draft</button>
             <button @click="saveInvoice(false)" class="button button-primary">Save & Send</button>
         </div>
         <div class="actions-container flex-hide-mobile">
             <div class="left">
-                <button @click="globalStore.setFormModalToggled(false, null)" class="button button-theme-primary">Discard</button>
+                <button v-if="!invoice.id" @click="globalStore.setFormModalToggled(false, null)" class="button button-theme-primary">Discard</button>
             </div>
             <div class="right">
                 <button @click="saveInvoice(true)" class="button button-theme-secondary">Save as Draft</button>
@@ -161,7 +160,7 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            gap: 2rem;
+            gap: 1rem;
             .field {
                 width: calc(50% - 1rem);
                 &.field-quantity {
@@ -173,7 +172,7 @@
             }
         }
         .items-section {
-            margin-top: 4rem;
+            margin: 4rem 0;
         }
         .item-list-header {
             font-size: 18px;
@@ -192,6 +191,7 @@
             flex-direction: column;
             justify-content: center;
             height: 48px;
+            max-width: 70px;
         }
         .delete-item {
             height: 77px;

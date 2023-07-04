@@ -6,15 +6,15 @@
         </div>
         <div v-if="filtersToggled" class="filter-options-container">
             <div class="filter-option">
-                <input @click="filterInvoices('draft')" type="checkbox">
+                <input :checked="globalStore.getActiveFilters.includes('draft')" @click="filterInvoices('draft')" type="checkbox">
                 <h4>Draft</h4>
             </div>
             <div class="filter-option">
-                <input @click="filterInvoices('pending')" type="checkbox">
+                <input :checked="globalStore.getActiveFilters.includes('pending')" @click="filterInvoices('pending')" type="checkbox">
                 <h4>Pending</h4>
             </div>
             <div class="filter-option">
-                <input @click="filterInvoices('paid')" type="checkbox">
+                <input :checked="globalStore.getActiveFilters.includes('paid')" @click="filterInvoices('paid')" type="checkbox">
                 <h4>Paid</h4>
             </div>
         </div>
@@ -91,6 +91,9 @@
                 type: String,
             }
         },
+        mounted() {
+            this.activeFilters = this.globalStore.getActiveFilters;
+        },
         methods: {
             filterInvoices(value: string): void {
                 if (!this.activeFilters.includes(value)) {
@@ -109,6 +112,7 @@
                 } else {
                     this.globalStore.setFilteredInvoiceList(this.globalStore.getInvoiceList);
                 }
+                this.globalStore.setActiveFilters(this.activeFilters);
                 console.log('filtered: ', this.globalStore.getFilteredInvoiceList);
             },
         }

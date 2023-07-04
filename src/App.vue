@@ -1,12 +1,8 @@
 <template>
   <div id="app-container">
     <Loading v-if="globalStore.getLoading && !globalStore.getInvoiceList.length"></Loading>
-    <Transition name="fade">
-      <DeleteModal v-if="globalStore.getDeleteModalToggled"></DeleteModal>
-    </Transition>
-    <Transition name="modal-slide">
-      <InvoiceFormModal v-if="globalStore.getFormModalToggled"></InvoiceFormModal>
-    </Transition>
+    <DeleteModal v-if="globalStore.getDeleteModalToggled"></DeleteModal>
+    <InvoiceFormModal v-if="globalStore.getFormModalToggled"></InvoiceFormModal>
     <Navbar :userTheme="userTheme"></Navbar>
     <div v-if="!globalStore.getLoading && globalStore.getInvoiceList.length" id="view-container">
       <router-view/>
@@ -339,6 +335,9 @@
     }
   }
   @media screen and (min-width: 1440px) {
+    .block-hide-tablet {
+      display: block;
+    }
     #app-container {
       display: flex;
       flex-direction: row;
