@@ -6,29 +6,33 @@
 
             <h4 class="section-header">Bill From</h4>
             <section class="form-section">
-                <div class="field">
+                <div class="field" :class="{'error': errors.includes('senderAddressStreet')}">
                     <div class="label-container">
                         <label for="from-street">Street Address</label>
+                        <p class="error-msg">Required</p>
                     </div>
                     <input v-model="formModel.senderAddress.street" class="field-input" type="text" name="from-street">
                 </div>
                 <div class="fields-row">
-                    <div class="field">
+                    <div class="field" :class="{'error': errors.includes('senderAddressCity')}">
                         <div class="label-container">
                             <label for="from-city">City</label>
+                            <p class="error-msg">Required</p>
                         </div>
                         <input v-model="formModel.senderAddress.city" class="field-input" type="text" name="from-city">
                     </div>
-                    <div class="field">
+                    <div class="field" :class="{'error': errors.includes('senderAddressPost')}">
                         <div class="label-container">
                             <label for="from-post">Post Code</label>
+                            <p class="error-msg">Required</p>
                         </div>
                         <input v-model="formModel.senderAddress.postCode" class="field-input" type="text" name="from-post">
                     </div>
                 </div>
-                <div class="field">
+                <div class="field" :class="{'error': errors.includes('senderAddressCountry')}">
                     <div class="label-container">
                         <label for="from-country">Country</label>
+                        <p class="error-msg">Required</p>
                     </div>
                     <input v-model="formModel.senderAddress.country" class="field-input" type="text" name="from-country">
                 </div>
@@ -36,49 +40,56 @@
 
             <h4 class="section-header">Bill To</h4>
             <section class="form-section">
-                <div class="field">
+                <div class="field" :class="{'error': errors.includes('clientName')}">
                     <div class="label-container">
                         <label for="client-name">Client's Name</label>
+                        <p class="error-msg">Required</p>
                     </div>
                     <input v-model="formModel.clientName" class="field-input" type="text" name="client-name">
                 </div>
-                <div class="field">
+                <div class="field" :class="{'error': errors.includes('clientEmail')}">
                     <div class="label-container">
                         <label for="client-email">Client's Email</label>
+                        <p class="error-msg">Required</p>
                     </div>
                     <input v-model="formModel.clientEmail" class="field-input" type="text" name="client-email">
                 </div>
-                <div class="field">
+                <div class="field" :class="{'error': errors.includes('clientAddressStreet')}">
                     <div class="label-container">
                         <label for="client-street">Street Address</label>
+                        <p class="error-msg">Required</p>
                     </div>
                     <input v-model="formModel.clientAddress.street" class="field-input" type="text" name="client-street">
                 </div>
                 <div class="fields-row">
-                    <div class="field">
+                    <div class="field" :class="{'error': errors.includes('clientAddressCity')}">
                         <div class="label-container">
                             <label for="client-city">City</label>
+                            <p class="error-msg">Required</p>
                         </div>
                         <input v-model="formModel.clientAddress.city" class="field-input" type="text" name="client-city">
                     </div>
-                    <div class="field">
+                    <div class="field" :class="{'error': errors.includes('clientAddressPost')}">
                         <div class="label-container">
                             <label for="client-post">Post Code</label>
+                            <p class="error-msg">Required</p>
                         </div>
                         <input v-model="formModel.clientAddress.postCode" class="field-input" type="text" name="client-post">
                     </div>
                 </div>
-                <div class="field">
+                <div class="field" :class="{'error': errors.includes('clientAddressCountry')}">
                     <div class="label-container">
                         <label for="client-country">Country</label>
+                        <p class="error-msg">Required</p>
                     </div>
                     <input v-model="formModel.clientAddress.country" class="field-input" type="text" name="client-country">
                 </div>
-                <DateSelector label="Invoice Date"></DateSelector>
-                <Dropdown label="Payment Terms" :options="paymentTerms"></Dropdown>
-                <div class="field">
+                <DateSelector @date="(value) => getDateSelection(value)" :errors="errors" label="Invoice Date"></DateSelector>
+                <Dropdown :errors="errors" label="Payment Terms" :options="paymentTerms"></Dropdown>
+                <div class="field" :class="{'error': errors.includes('description')}">
                     <div class="label-container">
                         <label for="project-desc">Project Description</label>
+                        <p class="error-msg">Required</p>
                     </div>
                     <input v-model="formModel.description" class="field-input" type="text" name="project-desc">
                 </div>
@@ -87,22 +98,25 @@
             <section class="form-section items-section">
                 <h4 class="item-list-header">Item List</h4>
                 <div class="item" v-for="(item, index) of formModel.items" :key="index">
-                    <div class="field">
+                    <div class="field" :class="{'error': errors.includes(`item${index}Name`)}">
                         <div class="label-container">
                             <label :for="`item${index}-name`">Item Name</label>
+                            <p class="error-msg">Required</p>
                         </div>
                         <input v-model="formModel.items[index].name" class="field-input" type="text" :name="`item${index}-name`">
                     </div>
                     <div class="fields-row">
-                        <div class="field field-quantity">
+                        <div class="field field-quantity" :class="{'error': errors.includes(`item${index}Quantity`)}">
                             <div class="label-container">
                                 <label :for="`item${index}-quantity`">Qty.</label>
+                                <p class="error-msg">Req.</p>
                             </div>
                             <input v-model="formModel.items[index].quantity" class="field-input" type="number" :name="`item${index}-quantity`">
                         </div>
-                        <div class="field field-price">
+                        <div class="field field-price" :class="{'error': errors.includes(`item${index}Price`)}">
                             <div class="label-container">
                                 <label :for="`item${index}-price`">Price</label>
+                                <p class="error-msg">Req.</p>
                             </div>
                             <input v-model="formModel.items[index].price" class="field-input" type="number" :name="`item${index}-price`">
                         </div>
@@ -124,6 +138,7 @@
                     Add New Item
                 </button>
             </section>
+            <p class="errors" :class="{'active': errors.length}">- All fields must be added</p>
         </form>
         <div class="mobile-actions-container flex-hide-tablet">
             <RouterLink v-if="!invoice.id" class="button button-theme-primary" to="/">Discard</RouterLink>
@@ -265,6 +280,7 @@
                     'Net 30 Days',
                 ],
                 globalStore: useGlobalStore(),
+                errors: [] as Array<string>,
             }
         },
         components: {
@@ -294,15 +310,59 @@
                 this.formModel.items.push(newItem);
             },
             saveInvoice(draft: boolean): void {
-                const items = this.formModel.items;
-                let total = 0;
-                items.forEach((item: InvoiceItem) => {
-                    item.total = item.quantity * item.price;
-                    total += item.total;
+                if (this.validateForm()) {
+                    const items = this.formModel.items;
+                    let total = 0;
+                    items.forEach((item: InvoiceItem) => {
+                        item.total = item.quantity * item.price;
+                        total += item.total;
+                    });
+                    this.formModel.items = items;
+                    this.formModel.total = total;
+                    this.$emit('saveInvoice', this.formModel, draft);
+                }
+            },
+            getDateSelection(value: string): void {
+                this.formModel.paymentDue = value;
+            },
+            validateForm(): boolean {
+                const form = this.formModel;
+                this.errors = [];
+                if (!form.senderAddress.street.length) {
+                    this.errors.push('senderAddressStreet');
+                } if (!form.senderAddress.city.length) {
+                    this.errors.push('senderAddressCity');
+                } if (!form.senderAddress.postCode.length) {
+                    this.errors.push('senderAddressPost');
+                } if (!form.senderAddress.country.length) {
+                    this.errors.push('senderAddressCountry');
+                } if (!form.clientName.length) {
+                    this.errors.push('clientName');
+                } if (!form.clientEmail.length) {
+                    this.errors.push('clientEmail');
+                } if (!form.clientAddress.street.length) {
+                    this.errors.push('clientAddressStreet');
+                } if (!form.clientAddress.city.length) {
+                    this.errors.push('clientAddressCity');
+                } if (!form.clientAddress.postCode.length) {
+                    this.errors.push('clientAddressPost');
+                } if (!form.clientAddress.country.length) {
+                    this.errors.push('clientAddressCountry');
+                } if (!form.description.length) {
+                    this.errors.push('description');
+                } if (!form.paymentDue.length) {
+                    this.errors.push('date');
+                }
+                form.items.forEach((item: InvoiceItem, index: number) => {
+                    if (!item.name?.length) {
+                        this.errors.push(`item${index}Name`);
+                    } if (!item.quantity) {
+                        this.errors.push(`item${index}Quantity`);
+                    } if (!item.price) {
+                        this.errors.push(`item${index}Price`);
+                    }
                 });
-                this.formModel.items = items;
-                this.formModel.total = total;
-                this.$emit('saveInvoice', this.formModel, draft);
+                return !this.errors.length;
             }
         }
     })

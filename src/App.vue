@@ -252,12 +252,16 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      .label-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
       .field-label {
         font-size: 13px;
         font-weight: 500;
       }
       .field-input {
-        // padding: 16.5px;
         display: flex;
         flex-direction: row;
         padding: 0 16.5px;
@@ -274,6 +278,28 @@
           outline: none;
           border: 1px solid var(--color-field-border-active);
         }
+      }
+      .error-msg {
+        display: none;
+      }
+      &.error {
+        label {
+          color: var(--color-button-danger);
+        }
+        .error-msg {
+          display: block;
+          color: var(--color-button-danger);
+        }
+        .field-input {
+          border: 1px solid var(--color-button-danger);
+        }
+      }
+    }
+    .errors {
+      display: none;
+      &.active {
+        display: block;
+        color: var(--color-button-danger);
       }
     }
     .inline-hide-mobile {

@@ -100,7 +100,6 @@ export const useGlobalStore = defineStore('globalStore', {
             error ? console.error(error) : await this.fetchInvoices();
         },
         async createNewInvoice(payload: Invoice): Promise<void> {
-            console.log('Running create invoice');
             payload.id = this.getUniqueId();
             const { error } = await supabase
             .from('invoices')

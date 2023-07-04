@@ -113,7 +113,6 @@
                     this.globalStore.setFilteredInvoiceList(this.globalStore.getInvoiceList);
                 }
                 this.globalStore.setActiveFilters(this.activeFilters);
-                console.log('filtered: ', this.globalStore.getFilteredInvoiceList);
             },
         }
     })

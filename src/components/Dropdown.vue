@@ -1,8 +1,9 @@
 <template>
     <div class="dropdown-field">
-        <div class="field">
+        <div class="field" :class="{'error': errors.includes('term')}">
             <div class="label-container">
                 <label for="dropdown">{{ label }}</label>
+                <p class="error-msg">Required</p>
             </div>
             <div class="dropdown-trigger field-input" :class="{'active': dropdownToggled}" @click="dropdownToggled = !dropdownToggled">
                 {{ selection }}
@@ -84,6 +85,9 @@
                 type: String,
             },
             options: {
+                type: Object,
+            },
+            errors: {
                 type: Object,
             }
         },

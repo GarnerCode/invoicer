@@ -1,14 +1,15 @@
 <template>
     <div class="date-selector-field">
-        <div class="field">
+        <div class="field" :class="{'error': errors.includes('date')}">
             <div class="label-container">
                 <label for="dropdown">{{ label }}</label>
+                <p class="error-msg">Required</p>
             </div>
             <!-- <div class="selector-trigger field-input" :class="{'active': selectorToggled}" @click="selectorToggled = !selectorToggled">
                 {{ selectedDate }}
                 <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M14 2h-.667V.667A.667.667 0 0012.667 0H12a.667.667 0 00-.667.667V2H4.667V.667A.667.667 0 004 0h-.667a.667.667 0 00-.666.667V2H2C.897 2 0 2.897 0 4v10c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zm.667 12c0 .367-.3.667-.667.667H2A.668.668 0 011.333 14V6.693h13.334V14z" fill="#7E88C3" fill-rule="nonzero" opacity=".5"/></svg>
             </div> -->
-            <input type="date" class="field-input">
+            <input @change="emitDateSelection()" type="date" class="field-input" v-model="date">
         </div>
     </div>
 </template>
@@ -48,11 +49,20 @@
             return {
                 selectedDate: new Date(),
                 selectorToggled: false,
+                date: '',
             }
         },
         props: {
             label: {
                 type: String,
+            },
+            errors: {
+                type: Object,
+            }
+        },
+        methods: {
+            emitDateSelection(): void {
+                this.$emit('date', this.date);
             }
         }
     })

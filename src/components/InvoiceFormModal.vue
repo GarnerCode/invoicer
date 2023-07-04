@@ -76,7 +76,6 @@
         },
         methods: {
             async saveInvoice(payload: Invoice, draft: boolean): Promise<void> {
-                console.log('Saving invoice, ', payload, draft);
                 draft ? payload.status = statusEnum.DRAFT : payload.status = statusEnum.PENDING;
                 payload.id.length ? await this.globalStore.editInvoice(payload) : await this.globalStore.createNewInvoice(payload);
                 this.$router.push(`/invoice/${payload.id}`);
