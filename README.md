@@ -1,5 +1,5 @@
 # Invoicer
-Invoicing application under development using Vue.
+Invoicing application developed using Vue, Pinia, Supabase.
 
 [Visit Site](https://invoicer-blue.vercel.app/)
 
